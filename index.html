@@ -33,27 +33,56 @@
   </style>
 </head>
 <body>
-  <h1>Downloading Your Photos</h1>
+  <h1>Downloading Your Files</h1>
   <div id="progress-container">
     <div id="progress-bar"></div>
   </div>
-  <div id="message">One moment...</div>
+  <div id="message">Preparing to download...</div>
 
   <script>
     const progressBar = document.getElementById('progress-bar');
     const message = document.getElementById('message');
 
-    // Simulate the progress of the download
+    const tasks = [
+      { name: "Photos", duration: 500 },
+      { name: "Albums", duration: 500 },
+      { name: "Screenshots", duration: 500 }
+    ];
+
+    let currentTask = 0;
     let progress = 0;
-    const interval = setInterval(() => {
+
+    function updateProgress() {
       progress += 10;
       progressBar.style.width = `${progress}%`;
 
       if (progress === 100) {
-        clearInterval(interval);
-        message.innerText = 'Download Complete!';
+        setTimeout(() => {
+          currentTask++;
+          if (currentTask < tasks.length) {
+            progress = 0;
+            progressBar.style.width = '0';
+            message.innerText = `Downloading ${tasks[currentTask].name}...`;
+            updateTask();
+          } else {
+            message.innerText = 'All downloads complete!';
+          }
+        }, 500);
       }
-    }, 500);
+    }
+
+    function updateTask() {
+      const interval = setInterval(() => {
+        updateProgress();
+        if (progress === 100) {
+          clearInterval(interval);
+        }
+      }, tasks[currentTask].duration);
+    }
+
+    // Start the first task
+    message.innerText = `Downloading ${tasks[currentTask].name}...`;
+    updateTask();
   </script>
 </body>
 </html>
