@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Downloading Photos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    #progress-container {
+      width: 80%;
+      max-width: 500px;
+      margin: 20px auto;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    #progress-bar {
+      height: 20px;
+      width: 0;
+      background-color: #4caf50;
+      transition: width 0.5s ease;
+    }
+    #message {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Downloading Your Photos</h1>
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+  <div id="message">One moment...</div>
+
+  <script>
+    const progressBar = document.getElementById('progress-bar');
+    const message = document.getElementById('message');
+
+    // Simulate the progress of the download
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 10;
+      progressBar.style.width = `${progress}%`;
+
+      if (progress === 100) {
+        clearInterval(interval);
+        message.innerText = 'Download Complete!';
+      }
+    }, 500);
+  </script>
+</body>
+</html>
